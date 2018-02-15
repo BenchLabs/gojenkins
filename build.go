@@ -21,7 +21,6 @@ import (
 	"regexp"
 	"strconv"
 	"time"
-	"strings"
 )
 
 type Build struct {
@@ -73,18 +72,6 @@ type generalObj struct {
 	UrlName                 string
 }
 
-type Timestamp time.Time
-
-func (ts *Timestamp) UnmarshalJSON(b []byte) error {
-	s := strings.Trim(string(b), "\"")
-	t, err := time.Parse(time.RFC1123, s)
-	if err != nil {
-		return err
-	}
-	*ts = Timestamp(t)
-	return nil
-}
-
 type TestResult struct {
 	Duration  float64 `json:"duration"`
 	Empty     bool    `json:"empty"`
@@ -110,7 +97,7 @@ type TestResult struct {
 		Name      string    `json:"name"`
 		Stderr    string    `json:"stderr"`
 		Stdout    string    `json:"stdout"`
-		Timestamp Timestamp `json:"timestamp"`
+		Timestamp time.Time `json:"timestamp"`
 	} `json:"suites"`
 }
 
