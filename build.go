@@ -78,43 +78,42 @@ type TestResult struct {
 	FailCount int64   `json:"failCount"`
 	PassCount int64   `json:"passCount"`
 	SkipCount int64   `json:"skipCount"`
-	Suites    []struct {
+	Suites []struct {
 		Cases []struct {
-			Age             int64       `json:"age"`
-			ClassName       string      `json:"className"`
-			Duration        float64     `json:"duration"`
-			ErrorDetails    interface{} `json:"errorDetails"`
-			ErrorStackTrace interface{} `json:"errorStackTrace"`
-			FailedSince     int64       `json:"failedSince"`
-			Name            string      `json:"name"`
-			Skipped         bool        `json:"skipped"`
-			SkippedMessage  interface{} `json:"skippedMessage"`
-			Status          string      `json:"status"`
-			Stderr          interface{} `json:"stderr"`
-			Stdout          interface{} `json:"stdout"`
+			Age             int64   `json:"age"`
+			ClassName       string  `json:"className"`
+			Duration        float64 `json:"duration"`
+			ErrorDetails    string  `json:"errorDetails"`
+			ErrorStackTrace string  `json:"errorStackTrace"`
+			FailedSince     int64   `json:"failedSince"`
+			Name            string  `json:"name"`
+			Skipped         string  `json:"skippedMessage"`
+			Status          string  `json:"status"`
+			Stderr          string  `json:"stderr"`
+			Stdout          string  `json:"stdout"`
 		} `json:"cases"`
-		Duration  float64     `json:"duration"`
-		ID        interface{} `json:"id"`
-		Name      string      `json:"name"`
-		Stderr    interface{} `json:"stderr"`
-		Stdout    interface{} `json:"stdout"`
-		Timestamp interface{} `json:"timestamp"`
+		Duration  float64 `json:"duration"`
+		ID        string  `json:"id"`
+		Name      string  `json:"name"`
+		Stderr    string  `json:"stderr"`
+		Stdout    string  `json:"stdout"`
+		Timestamp string  `json:"timestamp"`
 	} `json:"suites"`
 }
 
 type BuildResponse struct {
-	Actions   []generalObj
+	Actions []generalObj
 	Artifacts []struct {
 		DisplayPath  string `json:"displayPath"`
 		FileName     string `json:"fileName"`
 		RelativePath string `json:"relativePath"`
 	} `json:"artifacts"`
-	Building  bool   `json:"building"`
-	BuiltOn   string `json:"builtOn"`
+	Building bool   `json:"building"`
+	BuiltOn  string `json:"builtOn"`
 	ChangeSet struct {
 		Items []struct {
 			AffectedPaths []string `json:"affectedPaths"`
-			Author        struct {
+			Author struct {
 				AbsoluteUrl string `json:"absoluteUrl"`
 				FullName    string `json:"fullName"`
 			} `json:"author"`
@@ -123,13 +122,13 @@ type BuildResponse struct {
 			Date     string `json:"date"`
 			ID       string `json:"id"`
 			Msg      string `json:"msg"`
-			Paths    []struct {
+			Paths []struct {
 				EditType string `json:"editType"`
 				File     string `json:"file"`
 			} `json:"paths"`
 			Timestamp int64 `json:"timestamp"`
 		} `json:"items"`
-		Kind      string `json:"kind"`
+		Kind string `json:"kind"`
 		Revisions []struct {
 			Module   string
 			Revision int
@@ -152,7 +151,7 @@ type BuildResponse struct {
 	MavenArtifacts    interface{} `json:"mavenArtifacts"`
 	MavenVersionUsed  string      `json:"mavenVersionUsed"`
 	FingerPrint       []FingerPrintResponse
-	Runs              []struct {
+	Runs []struct {
 		Number int64
 		URL    string
 	} `json:"runs"`
