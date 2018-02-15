@@ -20,8 +20,8 @@ import (
 	"net/url"
 	"regexp"
 	"strconv"
-	"time"
 	"strings"
+	"time"
 )
 
 type Build struct {
@@ -91,7 +91,7 @@ type TestResult struct {
 	FailCount int64   `json:"failCount"`
 	PassCount int64   `json:"passCount"`
 	SkipCount int64   `json:"skipCount"`
-	Suites []struct {
+	Suites    []struct {
 		Cases []struct {
 			Age             int64   `json:"age"`
 			ClassName       string  `json:"className"`
@@ -115,18 +115,18 @@ type TestResult struct {
 }
 
 type BuildResponse struct {
-	Actions []generalObj
+	Actions   []generalObj
 	Artifacts []struct {
 		DisplayPath  string `json:"displayPath"`
 		FileName     string `json:"fileName"`
 		RelativePath string `json:"relativePath"`
 	} `json:"artifacts"`
-	Building bool   `json:"building"`
-	BuiltOn  string `json:"builtOn"`
+	Building  bool   `json:"building"`
+	BuiltOn   string `json:"builtOn"`
 	ChangeSet struct {
 		Items []struct {
 			AffectedPaths []string `json:"affectedPaths"`
-			Author struct {
+			Author        struct {
 				AbsoluteUrl string `json:"absoluteUrl"`
 				FullName    string `json:"fullName"`
 			} `json:"author"`
@@ -135,13 +135,13 @@ type BuildResponse struct {
 			Date     string `json:"date"`
 			ID       string `json:"id"`
 			Msg      string `json:"msg"`
-			Paths []struct {
+			Paths    []struct {
 				EditType string `json:"editType"`
 				File     string `json:"file"`
 			} `json:"paths"`
 			Timestamp int64 `json:"timestamp"`
 		} `json:"items"`
-		Kind string `json:"kind"`
+		Kind      string `json:"kind"`
 		Revisions []struct {
 			Module   string
 			Revision int
@@ -164,7 +164,7 @@ type BuildResponse struct {
 	MavenArtifacts    interface{} `json:"mavenArtifacts"`
 	MavenVersionUsed  string      `json:"mavenVersionUsed"`
 	FingerPrint       []FingerPrintResponse
-	Runs []struct {
+	Runs              []struct {
 		Number int64
 		URL    string
 	} `json:"runs"`
