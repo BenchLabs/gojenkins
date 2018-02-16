@@ -20,6 +20,7 @@ import (
 	"net/url"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -72,6 +73,18 @@ type generalObj struct {
 	UrlName                 string
 }
 
+type RFC1123Timestamp time.Time
+
+func (ts *RFC1123Timestamp) UnmarshalJSON(b []byte) error {
+	s := strings.Trim(string(b), "\"")
+	t, err := time.Parse(time.RFC1123, s)
+	if err != nil {
+		return err
+	}
+	*ts = RFC1123Timestamp(t)
+	return nil
+}
+
 type TestResult struct {
 	Duration  float64 `json:"duration"`
 	Empty     bool    `json:"empty"`
@@ -80,25 +93,26 @@ type TestResult struct {
 	SkipCount int64   `json:"skipCount"`
 	Suites    []struct {
 		Cases []struct {
-			Age             int64       `json:"age"`
-			ClassName       string      `json:"className"`
-			Duration        float64     `json:"duration"`
-			ErrorDetails    interface{} `json:"errorDetails"`
-			ErrorStackTrace interface{} `json:"errorStackTrace"`
-			FailedSince     int64       `json:"failedSince"`
-			Name            string      `json:"name"`
-			Skipped         bool        `json:"skipped"`
-			SkippedMessage  interface{} `json:"skippedMessage"`
-			Status          string      `json:"status"`
-			Stderr          interface{} `json:"stderr"`
-			Stdout          interface{} `json:"stdout"`
+			Age             int64   `json:"age"`
+			ClassName       string  `json:"className"`
+			Duration        float64 `json:"duration"`
+			ErrorDetails    string  `json:"errorDetails"`
+			ErrorStackTrace string  `json:"errorStackTrace"`
+			FailedSince     int64   `json:"failedSince"`
+			Name            string  `json:"name"`
+			Skipped         string  `json:"skippedMessage"`
+			Status          string  `json:"status"`
+			Stderr          string  `json:"stderr"`
+			Stdout          string  `json:"stdout"`
 		} `json:"cases"`
-		Duration  float64     `json:"duration"`
-		ID        interface{} `json:"id"`
-		Name      string      `json:"name"`
-		Stderr    interface{} `json:"stderr"`
-		Stdout    interface{} `json:"stdout"`
-		Timestamp interface{} `json:"timestamp"`
+		Duration            float64          `json:"duration"`
+		EnclosingBlockNames []string         `json:"enclosingBlockNames"`
+		EnclosingBlocks     []string         `json:"enclosingBlocks"`
+		ID                  string           `json:"id"`
+		Name                string           `json:"name"`
+		Stderr              string           `json:"stderr"`
+		Stdout              string           `json:"stdout"`
+		Timestamp           RFC1123Timestamp `json:"timestamp"`
 	} `json:"suites"`
 }
 
