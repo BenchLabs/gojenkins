@@ -105,12 +105,14 @@ type TestResult struct {
 			Stderr          string  `json:"stderr"`
 			Stdout          string  `json:"stdout"`
 		} `json:"cases"`
-		Duration  float64          `json:"duration"`
-		ID        string           `json:"id"`
-		Name      string           `json:"name"`
-		Stderr    string           `json:"stderr"`
-		Stdout    string           `json:"stdout"`
-		Timestamp RFC1123Timestamp `json:"timestamp"`
+		Duration            float64          `json:"duration"`
+		EnclosingBlockNames []string         `json:"enclosingBlockNames"`
+		EnclosingBlocks     []string         `json:"enclosingBlocks"`
+		ID                  string           `json:"id"`
+		Name                string           `json:"name"`
+		Stderr              string           `json:"stderr"`
+		Stdout              string           `json:"stdout"`
+		Timestamp           RFC1123Timestamp `json:"timestamp"`
 	} `json:"suites"`
 }
 
