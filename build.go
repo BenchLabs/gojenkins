@@ -73,15 +73,21 @@ type generalObj struct {
 	UrlName                 string
 }
 
-type RFC1123Timestamp time.Time
+type Timestamp time.Time
 
-func (ts *RFC1123Timestamp) UnmarshalJSON(b []byte) error {
+func (ts *Timestamp) UnmarshalJSON(b []byte) error {
 	s := strings.Trim(string(b), "\"")
-	t, err := time.Parse(time.RFC1123, s)
+	// Layout based on ISO8601_DATETIME_PATTERN in JUnit XSD here:
+	// https://github.com/windyroad/JUnit-Schema/blob/master/JUnit.xsd#L15
+	t, err := time.Parse("2006-01-02T15:04:05", s)
+	if err != nil {
+		// If the above layout is not compatible with the string, it might be in RFC1123
+		t, err = time.Parse(time.RFC1123, s)
+	}
 	if err != nil {
 		return err
 	}
-	*ts = RFC1123Timestamp(t)
+	*ts = Timestamp(t)
 	return nil
 }
 
@@ -105,14 +111,14 @@ type TestResult struct {
 			Stderr          string  `json:"stderr"`
 			Stdout          string  `json:"stdout"`
 		} `json:"cases"`
-		Duration            float64          `json:"duration"`
-		EnclosingBlockNames []string         `json:"enclosingBlockNames"`
-		EnclosingBlocks     []string         `json:"enclosingBlocks"`
-		ID                  string           `json:"id"`
-		Name                string           `json:"name"`
-		Stderr              string           `json:"stderr"`
-		Stdout              string           `json:"stdout"`
-		Timestamp           RFC1123Timestamp `json:"timestamp"`
+		Duration            float64   `json:"duration"`
+		EnclosingBlockNames []string  `json:"enclosingBlockNames"`
+		EnclosingBlocks     []string  `json:"enclosingBlocks"`
+		ID                  string    `json:"id"`
+		Name                string    `json:"name"`
+		Stderr              string    `json:"stderr"`
+		Stdout              string    `json:"stdout"`
+		Timestamp           Timestamp `json:"timestamp"`
 	} `json:"suites"`
 }
 
